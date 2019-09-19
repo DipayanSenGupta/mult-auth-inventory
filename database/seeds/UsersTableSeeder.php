@@ -14,6 +14,8 @@ class UsersTableSeeder extends Seeder
         factory(App\Admin::class)->create();
         for ($x = 0; $x <= 0; $x++) {
             factory(App\Writer::class)->create();
+            factory(App\Sale::class)->create();
+
             // factory(App\Item::class, 5)->create(['category_id' => $category->id])
         }
     }
