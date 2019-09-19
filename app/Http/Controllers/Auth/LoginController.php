@@ -40,6 +40,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
         $this->middleware('guest:admin')->except('logout');
         $this->middleware('guest:writer')->except('logout');
+        $this->middleware('guest:sale')->except('logout');
     }
 
     /**
@@ -52,6 +53,12 @@ class LoginController extends Controller
         ]);
     }
 
+    public function showSaleLoginForm()
+    {
+        return view('auth.login', [
+            'url' => Config::get('constants.guards.sale')
+        ]);
+    }
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -106,6 +113,19 @@ class LoginController extends Controller
         return back()->withInput($request->only('email', 'remember'));
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function saleLogin(Request $request)
+    {
+        if ($this->guardLogin($request, Config::get('constants.guards.sale'))) {
+            return redirect()->intended('/sale');
+        }
+
+        return back()->withInput($request->only('email', 'remember'));
+    }
 
 
     /**
@@ -115,7 +135,7 @@ class LoginController extends Controller
      */
     public function writerLogin(Request $request)
     {
-        if ($this->guardLogin($request,Config::get('constants.guards.writer'))) {
+        if ($this->guardLogin($request, Config::get('constants.guards.writer'))) {
             return redirect()->intended('/writer');
         }
 

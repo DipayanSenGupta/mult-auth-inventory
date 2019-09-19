@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use App\Admin;
 use App\Writer;
+use App\Sale;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -42,6 +43,7 @@ class RegisterController extends Controller
         $this->middleware('guest');
         $this->middleware('guest:admin');
         $this->middleware('guest:writer');
+        $this->middleware('guest:sale');
     }
 
     /**
@@ -65,6 +67,14 @@ class RegisterController extends Controller
     public function showAdminRegisterForm()
     {
         return view('auth.register', ['url' => 'admin']);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showSaleRegisterForm()
+    {
+        return view('auth.register', ['url' => 'sale']);
     }
 
     /**
@@ -119,5 +129,21 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
         return redirect()->intended('login/writer');
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function createSale(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        Sale::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+        return redirect()->intended('login/sale');
     }
 }
