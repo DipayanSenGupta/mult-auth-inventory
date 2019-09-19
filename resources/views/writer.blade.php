@@ -8,26 +8,20 @@
                 <div class="card-header">Dashboard</div>
 
                 <div class="card-body">
-                    Hi there, {{ Auth::user()->name }}
-                </div>
-                <form method="POST" action="{{ route('products.checkout') }}">
-                {{ csrf_field() }}
-                    <select name="item" class="form-control">
-                        <option value="freemium">Freemium ($00.00/month)</option>
-                        <option value="silver">Premium solo ($50.00/month)</option>
-                        <option value="Golden">Premium spider ($80.00/month)</option>
-                    </select>
+                    Hi Sales person!
+                    @if(session()->get('success'))
+                    <div class="alert alert-success">
+                        {{ session()->get('success') }}
+                    </div><br />
+                    @endif
+                    <div class="">
+                        <!-- <a href="{{ route('products.create') }}" class="btn btn-xs btn-info pull-right">Add Product to inventory</a> -->
+                        <a href="{{ route('products.index') }}" class="btn btn-xs btn-info pull-right">Show inventory</a>
+                        <a href="{{ route('products.checkout-index') }}" class="btn btn-xs btn-info pull-right">Checkout</a>
 
-                    <label for="exampleFormControlSelect1">Example select</label>
-                    <select class="form-control" name="quantity">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
-                    <input type="submit" value="Submit Form" />
-                </form>
+                        <!-- <a href="{{ route('products.history') }}" class="btn btn-xs btn-info pull-right">Show inventory history</a> -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>

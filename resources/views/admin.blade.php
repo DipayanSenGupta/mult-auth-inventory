@@ -9,6 +9,11 @@
 
                 <div class="card-body">
                     Hi boss!
+                    <div class="">
+                    <a href="{{ route('products.create') }}" class="btn btn-xs btn-info pull-right">Add Product to inventory</a>
+                    <a href="{{ route('products.index') }}" class="btn btn-xs btn-info pull-right">Show inventory</a>
+                    <a href="{{ route('products.history') }}" class="btn btn-xs btn-info pull-right">Show inventory history</a>
+                </div>
                 </div>
             </div>
         </div>
