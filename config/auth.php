@@ -55,6 +55,10 @@ return [
             'driver' => 'session',
             'provider' => 'writers',
         ],
+        'sale' => [
+            'driver' => 'session',
+            'provider' => 'sales',
+        ],
     ],
 
     /*
@@ -88,6 +92,10 @@ return [
         'writers' => [
             'driver' => 'eloquent',
             'model' => App\Writer::class,
+        ],
+        'sales' => [
+            'driver' => 'eloquent',
+            'model' => App\Sale::class,
         ],
 
         // 'users' => [
