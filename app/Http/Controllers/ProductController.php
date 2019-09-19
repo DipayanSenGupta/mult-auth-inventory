@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\History;
 use Illuminate\Http\Request;
-
+use Auth;
 class ProductController extends Controller
 {
     /**
@@ -81,5 +82,28 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+
+        /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function checkout(Request $request)
+    {
+        // History::create($request->all());
+        // dd($request);
+        // echo $request->input('item');
+        // $user = auth()->user();
+        // dd(Auth::user());
+        $history = new History([
+            'name' => $request->input('item'),
+            'person'=> Auth::user()->name,
+            'quantity'=> $request->input('quantity')
+          ]);
+          $history->save();
+          return redirect('/writer')->with('success', 'history has been added');
+
     }
 }

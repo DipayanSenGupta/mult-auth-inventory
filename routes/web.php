@@ -20,17 +20,19 @@ Route::post('/register/sale', 'Auth\RegisterController@createSale')->name('regis
 
 
 Route::view('/home', 'home')->middleware('auth');
+
 Route::group(['middleware' => 'auth:admin'], function () {
     Route::view('/admin', 'admin');
     Route::get('/products/create','ProductController@create')->name('products.create');
     Route::post('/products','ProductController@store')->name('products.store');
-
 });
 
 Route::group(['middleware' => 'auth:writer'], function () {
     Route::view('/writer', 'writer');
+    Route::post('products/checkout', 'ProductController@checkout')->name('products.checkout');
 });
 
 Route::group(['middleware' => 'auth:sale'], function () {
     Route::view('/sale', 'sale');
 });
+
