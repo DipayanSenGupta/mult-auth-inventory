@@ -15,7 +15,22 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::paginate(15);
+
+        return view('products.index', compact('products'));
+    }
+    public function checkoutIndex()
+    {
+        $products = Product::all();
+        return view('sales-checkout', compact('products'));
+
+    }
+
+    public function history()
+    {
+        $histories = History::paginate(15);
+
+        return view('history-index', compact('histories'));
     }
 
     /**
@@ -25,7 +40,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');
+
     }
 
     /**
@@ -36,8 +52,18 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'name'=>'required',
+            'price'=> 'required|integer|min:1',
+            'quantity' => 'required|integer|min:10'
+          ]);
+          $product = new Product([
+            'name' => $request->get('name'),
+            'price'=> $request->get('price'),
+            'quantity'=> $request->get('quantity')
+          ]);
+          $product->save();
+          return redirect('/products/index')->with('success', 'Product has been added');    }
 
     /**
      * Display the specified resource.
@@ -92,18 +118,31 @@ class ProductController extends Controller
      */
     public function checkout(Request $request)
     {
-        // History::create($request->all());
         // dd($request);
-        // echo $request->input('item');
-        // $user = auth()->user();
-        // dd(Auth::user());
+
+        $productId = $request->input('itemId');
+        $message = '';
+        $product = Product::find($productId);
+        $productQuantity = $request->input('quantity');
+        $netQuanity = $product->quantity - $productQuantity;
+        if($netQuanity){
+            $product->quantity = $netQuanity;
+            $product->name = $product->name;
+            $product->price = $product->price;
+            $product->save();
+            $message = 'Checkout has finished';
+        }
+        else{
+            $message = 'you are checking out more than what is available';
+            return redirect('/products/checkoutIndex')->with('success', $message );
+        }
         $history = new History([
-            'name' => $request->input('item'),
+            'name' => $product->name,
             'person'=> Auth::user()->name,
-            'quantity'=> $request->input('quantity')
+            'quantity'=> $productQuantity
           ]);
           $history->save();
-          return redirect('/writer')->with('success', 'history has been added');
+          return redirect('/products/checkoutIndex')->with('success', $message );
 
     }
 }
