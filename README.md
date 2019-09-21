@@ -6,12 +6,12 @@ To follow along, this application has been documented as an article on Pusher bl
 ## Set up
 To set up this project, first clone the repositiory
 ```bash
-$ git clone https://github.com/fisayoafolayan/laravel-multiple-auth.git
+$ git clone git@github.com:DipayanSenGupta/mult-auth-inventory.git
 ```
 
 Change your working directory into the project directory
 ```bash
-$ cd laravel-multiple-auth
+$ cd mult-auth-inventory
 ```
 
 Then install dependencies using [Composer](https://getcomposer.org/doc/00-intro.md)
@@ -19,15 +19,9 @@ Then install dependencies using [Composer](https://getcomposer.org/doc/00-intro.
 $ composer install
 ```
 
-Copy `.env.example` to `.env`
-```bash
-$ cp .env.example .env
-```
+Setup `.env`
 
 Create the database file
-```bash
-$ touch database/database.sqlite
-```
 
 ## Run
 Run the application with the following command
@@ -35,9 +29,9 @@ Run the application with the following command
 $ php artisan serve
 ```
 
-Remember to visit `http://localhost:8000/register/writer` and `http://localhost:8000/register/admin` to register writers and admins respectively. Then visit `http://localhost:8000/login/writer` and `http://localhost:8000/login/admin` to login the writers and admins respectively.
+Remember to visit `http://localhost:8000/register/writer` and `http://localhost:8000/register/admin` to register sales and admins respectively. Then visit `http://localhost:8000/login/writer` and `http://localhost:8000/login/admin` to login the sales and admins respectively.
+
+`http://localhost:8000/products/index` to see the inventory from both `http://localhost:8000/writer` (sales) and `http://localhost:8000/admin`(admin). Checking out product `http://localhost:8000/products/checkoutIndex` is enabled from `http://localhost:8000/writer`and http://localhost:8000/products/create (product creation) & http://localhost:8000/products/history (product history) is enabled from admin vie
 
 ## Built With
 [Laravel](https://laravel.com/) - The PHP Framework For Web Artisans.
-
-[SQLite](https://en.wikipedia.org/wiki/SQLite) - A relational database management system.
